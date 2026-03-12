@@ -10,7 +10,8 @@
     <div style="display: flex;">
         <div style="width: 100%;">
             <h1 style="font-weight: normal; margin-top: 0;">Welcome to <span id="Title"><span style="color: red;">K</span><span style="color: orange;">i</span><span style="color: goldenrod;">n</span><span style="color: green;">a</span><span style="color: blue;">n</span><span style="color: violet;">J</span><span style="color: indigo;">e</span><span style="color: red;">f</span><span style="color: orange;">f</span><span style="color: goldenrod;">!</span></span></h1>
-	        <h2 style="font-weight: normal; font-size: 20px;">Last updated: 23:21, March 12, 2026</h2>
+	        <h2 style="font-weight: normal; font-size: 20px;">Last updated: 23:51, March 12, 2026</h2>
+            <h2 style="font-weight: normal; font-size: 20px;">Total: <span id="totalLinks" style="color: blue;">0</span> Normal: <span id="normalLinks" style="color: blue;">0</span> Onion: <span id="onionLinks" style="color: blue;">0</span></h2>
             <p>Note: I do not support drug use and therefore try to minimize the number of drug-related links included here.</p>
             <br>
             <input id="search" placeholder="Sift...">
@@ -167,6 +168,7 @@
         document.querySelectorAll('a').forEach(link => {
             let intervalId;
             link.style.transition = 'color 0.3s linear';
+
             link.addEventListener('mouseover', () => {
                 intervalId = setInterval(() => {
                     const hue = Math.random() * 360;
@@ -178,6 +180,31 @@
                 link.style.color = '';
             });
         });
+        function countLinks() {
+            const links = document.querySelectorAll("a");
+            let total = 0;
+            let onion = 0;
+            let normal = 0;
+            links.forEach(link => {
+                const href = link.getAttribute("href");
+                if (!href) return;
+                total++;
+                if (href.includes(".onion")) {
+                    onion++;
+                } else if (href.startsWith("http")) {
+                    normal++;
+                }
+            });
+            if (document.getElementById("totalLinks"))
+                document.getElementById("totalLinks").textContent = total;
+
+            if (document.getElementById("normalLinks"))
+                document.getElementById("normalLinks").textContent = normal;
+
+            if (document.getElementById("onionLinks"))
+                document.getElementById("onionLinks").textContent = onion;
+        }
+        window.addEventListener("DOMContentLoaded", countLinks);
     </script>
 </body>
 </html>
